@@ -97,14 +97,35 @@ echo "ss://$client_base64"| qrencode -o - -t UTF8
 #Delete .gz backup files
 file_type=gz
 file_num=4
-old_list=`ls -t $PWD/*.$file_type 3>/dev/null|tail -n +$file_num`
+old_list=`ls -t $PWD/*.$file_type 2>/dev/null|tail -n +$file_num`
 if [ -z "$old_list" ];then
         exit;
 else
         rm -rf $old_list
 fi
 
-#an example,touch a new test.txt file with some line.
+#Selecte pid to kill
+pidlists=`ps aux|grep -E "hf_sh*|hf_bri*|hf_lo*|hf_noti*"|awk '{print $2}'`
+kill -9 $pidlist
+
+#Loop modify file
+for j in {5..24}
+do
+        echo chean shooter${j}
+        #cp  -rf  ./shooter${j}/log ./bak
+done
+
+#Loop modify file  
+a=(bridge  bridge1 logon noticer fruiter)
+for i in ${a[*]}
+do
+        echo clean $i
+        #cp -rf  ./${i}/log ./bak
+done
+
+
+
+#Touch a new test.txt file with some line.
 cat <<EOF>test.txt
 #one line
 #two line
