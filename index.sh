@@ -123,6 +123,31 @@ do
         #cp -rf  ./${i}/log ./bak
 done
 
+#Modify one line in files
+for b in {1..4}
+do
+        if [ -s /dwc/shooter$b/config/table.properties ] ;then
+                cd /dwc/shooter$b/config/
+                sed -i "s/Table.TableCount=1/Table.TableCount=5/g" ./table.properties
+        fi
+done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #Touch a new test.txt file with some line.
