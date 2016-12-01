@@ -132,6 +132,23 @@ do
         fi
 done
 
+#connect host in iplist.txt and excute the $COMMAND command.
+COMMAND="cat /etc/fstab|tail -n 1&&file_systems=\$(df -P -T|grep db1|awk '{print \$1}')&&mount_dir=\$(df -P -T|grep db1|awk '{print \$7}')&&mount_type=\$(df -P -T|grep db1|awk '{print \$2}')&&echo -e \"\$file_systems\\t\\t\$mount_dir\\t\\t\\t\$mount_type\\tdefaults\\t0 2\""
+
+i=0
+for line in `cat iplist.txt`
+do
+        let i+=1
+        echo "$i########"
+        echo "${line}"
+	#use sshpass skip hand input  password 
+	#ssh -o StrictHostKeyChecking=no to disable host key check
+        sshpass -p 'wXGsEG4YfhTs9PTdbqTN' ssh -o StrictHostKeyChecking=no root@${line} "$COMMAND"
+        echo "$i########"
+done
+
+#analysis  secure file,how many Failed login.
+cat /var/log/secure|grep -i 'Failed password'|awk '{print $(NF-3)}'|sort|uniq -c|sort -bnr
 
 
 
