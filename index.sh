@@ -151,14 +151,18 @@ done
 cat /var/log/secure|grep -i 'Failed password'|awk '{print $(NF-3)}'|sort|uniq -c|sort -bnr
 
 
+#run a command on the server in iplist.txt
+COMMAND="service httpd status"
 
-
-
-
-
-
-
-
+i=0
+for line in `cat iplist.txt`
+do
+        let i+=1
+        echo "$i########"
+        echo "${line}"
+        sshpass -p 'password' ssh -o StrictHostKeyChecking=no root@${line} "$COMMAND"
+        echo "$i########"
+done
 
 
 
